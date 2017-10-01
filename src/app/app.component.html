@@ -1,9 +1,14 @@
 <div class="col-md-offset-2 col-md-8">
   <button (click)="login()" *ngIf="!(user | async)?.uid">Login</button>
   <button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
-
-  <input type="text" id="message" *ngIf="(user | async)?.uid" placeholder="chat here?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal">
-  <div id="details-container">
-    <p *ngFor="let item of items | async">{{item.message}}<span class="user_name">{{item.name}}</span></p>
+  <div #scrollMe id="details-container">
+    <div *ngFor="let item of items | async" [class.me]="isMe(item.email)" [class.you]="isYou(item.email)">
+      <p>
+        <img class="img-circle" src="{{item.image}}" height="30px" width="30px">&nbsp; &nbsp;{{item.message}} &nbsp;
+        <span class="timestamp">{{ item.timestamp | date:"dd/MM/yy hh:mm a" }}</span>
+        <span class="user_name">{{item.name}}</span>
+      </p>
+    </div>
   </div>
+  <input type="text" id="message" *ngIf="(user | async)?.uid" placeholder="chat here?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal">
 </div>
