@@ -23,14 +23,10 @@ input#message {
   overflow-y: scroll;
 }
 
-#details-container p {
-  padding: 1.4em;
+.message_container {
+  padding: 10px;
   color: #696969;
   margin: 12px;
-}
-
-.user_name {
-  float: right;
 }
 
 .me {
