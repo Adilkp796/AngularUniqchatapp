@@ -9,6 +9,17 @@ input#message {
   margin-bottom: 3em;
   padding: 1.2em .7em;
 }
+.login_button {
+    background:#008FEF;
+    color:white;
+    padding: 1.2em;
+    width:300px;
+    text-align:center;
+    font-size:1.2em;
+    margin-bottom: 30px;
+    cursor:pointer;
+}/* You can add global styles to this file, and also import other style files */
+
 
 #details-container {
   background-color: #929292;
@@ -42,4 +53,9 @@ input#message {
   background-color: #dcf8c6;
   display: inherit;
   margin: 5px 20px 5px 400px;
+}
+.delete_button{
+  border: 1px solid;
+background-color: #3C9;
+color: #ffffff;
 }

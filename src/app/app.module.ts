@@ -5,6 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+// import image upload
+// import { ImageUploadModule } from "angular2-image-upload";
+// uploads picture
+import { UploadService } from './uploads/shared/upload.service';
+import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
+import { UploadsListComponent } from './uploads/uploads-list/uploads-list.component';
+import { UploadDetailComponent } from './uploads/upload-detail/upload-detail.component';
 
 
 export const firebaseConfig = {
@@ -22,10 +29,18 @@ export const firebaseConfig = {
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    // ImageUploadModule.forRoot(),
     AngularFireDatabaseModule,
-    AngularFireAuthModule // imports firebase/app needed for everything
+    AngularFireAuthModule
   ],
-  declarations: [AppComponent],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent,
+                 UploadFormComponent,
+                 UploadsListComponent,
+                 UploadDetailComponent,
+  ],
+  bootstrap: [AppComponent],
+  providers: [
+    UploadService
+  ]
 })
 export class AppModule { }

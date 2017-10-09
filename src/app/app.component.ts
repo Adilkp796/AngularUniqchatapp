@@ -3,7 +3,9 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase/app';
-
+// upload sevice from shared folder
+import { UploadService } from './uploads/shared/upload.service';
+import { Upload } from './uploads/shared/upload';
 
 
 @Component({
@@ -17,15 +19,17 @@ export class AppComponent implements OnInit, AfterViewChecked {
   public msgVal: string;
   public image:any;
   public email:any;
+  uploads: FirebaseListObservable<Upload[]>;
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   ngOnInit() {
+    this.uploads = this.upSvc.getUploads({limitToLast: 50})
   }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
-  constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase) {
-    this.items = af.list('/messages', {
+  constructor(public afAuth: AngularFireAuth, public af: AngularFireDatabase, private upSvc: UploadService) {
+    this.items = af.list('/uploads', {
       query: {
         limitToLast: 50
       }
@@ -50,18 +54,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
   logout() {
     this.afAuth.auth.signOut();
   }
-
   Send(desc: string) {
     this.items.push({
        message: desc,
-       name: this.currentUserDisplayName(),
-       image:this.afAuth.auth.currentUser.photoURL,
+       displayName: this.currentUserDisplayName(),
+       profileImage:this.afAuth.auth.currentUser.photoURL,
        timestamp: Date.now(),
-       email:this.afAuth.auth.currentUser.email
+       email:this.afAuth.auth.currentUser.email,
       });
     this.msgVal = '';
     this.email=this.afAuth.auth.currentUser.email;
-    // console.log(this.email);
   }
   isYou(email){
      if(email==this.afAuth.auth.currentUser.email)
