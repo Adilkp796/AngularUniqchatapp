@@ -16,7 +16,7 @@
       </div>
     </div> -->
     <div *ngFor="let upload of uploads | async" [class.me]="isMe(upload.email)" [class.you]="isYou(upload.email)">
-      <img src="{{upload.url}}" alt="" height="400px" width="400px">
+      <a href="{{upload.url}}" download><img src="{{upload.url}}" alt="" height="400px" width="400px" ></a>
       <div class="message_container">
         <div class="row">
           <div class="col-md-7">
