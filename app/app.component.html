@@ -1,0 +1,38 @@
+<div class="col-md-offset-2 col-md-8">
+  <button (click)="login()" *ngIf="!(user | async)?.uid" class="login_button">Login</button>
+  <button (click)="logout()" *ngIf="(user | async)?.uid" class="login_button">Logout</button>
+  <div #scrollMe id="details-container">
+    <!-- <div *ngFor="let item of items | async" [class.me]="isMe(item.email)" [class.you]="isYou(item.email)">
+      <div class="message_container">
+        <div class="row">
+          <div class="col-md-7">
+            <img class="img-circle" src="{{item.image}}" height="30px" width="30px">&nbsp; &nbsp;{{item.message}} &nbsp;
+          </div>
+          <div class="col-md-5">
+            <p>{{item.name}}</p>
+            <p>{{ item.timestamp | date:"dd/MM/yy hh:mm a" }}</p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div *ngFor="let upload of uploads | async" [class.me]="isMe(upload.email)" [class.you]="isYou(upload.email)">
+      <a href="{{upload.imageUrl}}" download><img src="{{upload.imageUrl}}" alt="" height="400px" width="400px" ></a>
+      <video *ngIf="upload.videoUrl" width="400" controls>
+         <source src="{{upload.videoUrl}}">
+       </video>
+      <div class="message_container">
+        <div class="row">
+          <div class="col-md-7">
+            <img class="img-circle" src="{{upload.profileImage}}" height="30px" width="30px">&nbsp; &nbsp;{{upload.message}} &nbsp;
+          </div>
+          <div class="col-md-5">
+            <p>{{upload.displayName}}</p>
+            <p>{{ upload.timestamp | date:"dd/MM/yy hh:mm a" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="text" id="message" *ngIf="(user | async)?.uid" placeholder="chat here?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal">
+  <uploads-list></uploads-list>
+</div>

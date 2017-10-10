@@ -1,11 +1,11 @@
 body {
     background-color:#EBEBEB;
-    padding-top: 5em;
+    padding-top: 1em;
 }
 * {
     font-family: 'Raleway';
 }
-button {
+/*button {
     background:#008FEF;
     color:white;
     padding: 1.2em;
