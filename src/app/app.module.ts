@@ -10,6 +10,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 // uploads picture
 import { UploadService } from './uploads/shared/upload.service';
 import { videoUploadService } from './uploads/shared/videoupload.service';
+import { audioUploadService } from './uploads/shared/audioupload.service';
 import { UploadFormComponent } from './uploads/upload-form/upload-form.component';
 import { UploadsListComponent } from './uploads/uploads-list/uploads-list.component';
 import { UploadDetailComponent } from './uploads/upload-detail/upload-detail.component';
@@ -42,7 +43,8 @@ export const firebaseConfig = {
   bootstrap: [AppComponent],
   providers: [
     UploadService,
-    videoUploadService
+    videoUploadService,
+    audioUploadService
   ]
 })
 export class AppModule { }

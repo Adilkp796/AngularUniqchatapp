@@ -8,6 +8,7 @@ export class Upload {
   name:string;
   imageUrl:string;
   videoUrl:string;
+  audioUrl:string;
   progress:number;
   createdAt: Date = new Date();
 

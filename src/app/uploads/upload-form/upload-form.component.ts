@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../shared/upload.service';
 import { videoUploadService } from '../shared/videoupload.service';
+import { audioUploadService } from '../shared/audioupload.service';
 import {  FirebaseListObservable } from 'angularfire2/database';
 
 
@@ -17,7 +18,7 @@ export class UploadFormComponent implements OnInit {
   selectedFiles: FileList;
   currentUpload: Upload;
 
-  constructor(private upSvc: UploadService,private vdSvc:videoUploadService) { }
+  constructor(private upSvc: UploadService,private vdSvc:videoUploadService,private adSvc:audioUploadService) { }
 
   ngOnInit() {
 
@@ -38,7 +39,7 @@ export class UploadFormComponent implements OnInit {
       this.currentUpload = new Upload(files);
       this.upSvc.pushUpload(this.currentUpload)
     }else{
-      console.log("Invalid Type")
+      alert("please check")
     }
 
 
@@ -50,10 +51,20 @@ export class UploadFormComponent implements OnInit {
       this.currentUpload = new Upload(files);
       this.vdSvc.pushUpload(this.currentUpload)
     }else{
-      console.log("Invalid Type")
+      alert("please check")
     }
   }
+  uploadaudio(){
+  //  audio/mp3
 
-
+  let fileType = this.selectedFiles["0"].type;
+  if(fileType === "audio/mp3"){
+    let files = this.selectedFiles.item(0)
+    this.currentUpload = new Upload(files);
+    this.adSvc.pushUpload(this.currentUpload)
+  }else{
+    alert("please check")
+  }
+  }
 
 }

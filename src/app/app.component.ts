@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app';
 // upload sevice from shared folder
 import { UploadService } from './uploads/shared/upload.service';
 import { videoUploadService } from './uploads/shared/videoupload.service';
+import { audioUploadService } from './uploads/shared/audioupload.service';
 import { Upload } from './uploads/shared/upload';
 
 
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.user = this.afAuth.authState;
     console.log(afAuth);
   }
-  
+
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
