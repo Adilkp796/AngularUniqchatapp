@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-md-offset-2 col-md-8\">\r\n  <button (click)=\"login()\" *ngIf=\"!(user | async)?.uid\" class=\"login_button\">Login</button>\r\n  <button (click)=\"logout()\" *ngIf=\"(user | async)?.uid\" class=\"login_button\">Logout</button>\r\n  <div #scrollMe id=\"details-container\">\r\n    <!-- <div *ngFor=\"let item of items | async\" [class.me]=\"isMe(item.email)\" [class.you]=\"isYou(item.email)\">\r\n      <div class=\"message_container\">\r\n        <div class=\"row\">\r\n          <div class=\"col-md-7\">\r\n            <img class=\"img-circle\" src=\"{{item.image}}\" height=\"30px\" width=\"30px\">&nbsp; &nbsp;{{item.message}} &nbsp;\r\n          </div>\r\n          <div class=\"col-md-5\">\r\n            <p>{{item.name}}</p>\r\n            <p>{{ item.timestamp | date:\"dd/MM/yy hh:mm a\" }}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div> -->\r\n    <div *ngFor=\"let upload of uploads | async\" [class.me]=\"isMe(upload.email)\" [class.you]=\"isYou(upload.email)\">\r\n      <a href=\"{{upload.imageUrl}}\" download><img *ngIf=\"upload.imageUrl\" src=\"{{upload.imageUrl}}\" alt=\"img\" height=\"350px\" width=\"400px\" ></a>\r\n      <video *ngIf=\"upload.videoUrl\" width=\"400\" controls>\r\n         <source src=\"{{upload.videoUrl}}\">\r\n       </video>\r\n      <audio *ngIf=\"upload.audioUrl\" controls>\r\n       <source  src=\"{{upload.audioUrl}}\" type=\"audio/mpeg\">\r\n     </audio>\r\n\r\n      <div class=\"message_container\">\r\n        <div class=\"row\">\r\n          <div class=\"col-md-7\">\r\n            <img class=\"img-circle\" src=\"{{upload.profileImage}}\" height=\"30px\" width=\"30px\">&nbsp; &nbsp;{{upload.message}} &nbsp;\r\n          </div>\r\n          <div class=\"col-md-5\">\r\n            <p>{{upload.displayName}}</p>\r\n            <p>{{ upload.timestamp | date:\"dd/MM/yy hh:mm a\" }}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <input type=\"text\" id=\"message\" *ngIf=\"(user | async)?.uid\" placeholder=\"chat here?\" (keyup.enter)=\"Send($event.target.value)\" [(ngModel)]=\"msgVal\">\r\n  <uploads-list></uploads-list>\r\n</div>\r\n"
+module.exports = "<div class=\"col-md-offset-2 col-md-8\">\r\n  <button (click)=\"login()\" *ngIf=\"!(user | async)?.uid\" class=\"login_button\">Please Login with Google</button>\r\n  <button (click)=\"logout()\" *ngIf=\"(user | async)?.uid\" class=\"login_button\">Logout</button>\r\n  <div #scrollMe id=\"details-container\" *ngIf=\"(user | async)?.uid\">\r\n    <div *ngFor=\"let upload of uploads | async\" [class.me]=\"isMe(upload.email)\" [class.you]=\"isYou(upload.email)\">\r\n      <a href=\"{{upload.imageUrl}}\" download><img *ngIf=\"upload.imageUrl\" src=\"{{upload.imageUrl}}\" alt=\"img\" height=\"350px\" width=\"400px\" ></a>\r\n      <video *ngIf=\"upload.videoUrl\" width=\"400\" controls>\r\n         <source src=\"{{upload.videoUrl}}\">\r\n       </video>\r\n      <audio *ngIf=\"upload.audioUrl\" controls>\r\n       <source  src=\"{{upload.audioUrl}}\" type=\"audio/mpeg\">\r\n     </audio>\r\n\r\n      <div class=\"message_container\">\r\n        <div class=\"row\">\r\n          <div class=\"col-md-7\">\r\n            <img class=\"img-circle\" src=\"{{upload.profileImage}}\" height=\"30px\" width=\"30px\">&nbsp; &nbsp;{{upload.message}} &nbsp;\r\n          </div>\r\n          <div class=\"col-md-5\">\r\n            <p>{{upload.displayName}}</p>\r\n            <p>{{ upload.timestamp | date:\"dd/MM/yy hh:mm a\" }}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <input type=\"text\" id=\"message\" *ngIf=\"(user | async)?.uid\" placeholder=\"chat here?\" (keyup.enter)=\"Send($event.target.value)\" [(ngModel)]=\"msgVal\">\r\n  <uploads-list *ngIf=\"(user | async)?.uid\"></uploads-list>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -52,7 +52,7 @@ module.exports = "<div class=\"col-md-offset-2 col-md-8\">\r\n  <button (click)=
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__("../../../../angularfire2/auth/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase_app__ = __webpack_require__("../../../../firebase/app.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_firebase_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_firebase_app__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__uploads_shared_upload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__uploads_shared_pictureupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/pictureupload.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -102,7 +102,8 @@ var AppComponent = (function () {
         }
     };
     AppComponent.prototype.login = function () {
-        this.afAuth.auth.signInWithPopup(new __WEBPACK_IMPORTED_MODULE_3_firebase_app__["auth"].GoogleAuthProvider());
+        this.afAuth.auth.signInWithRedirect(new __WEBPACK_IMPORTED_MODULE_3_firebase_app__["auth"].GoogleAuthProvider());
+        // signInWithPopup
     };
     AppComponent.prototype.logout = function () {
         this.afAuth.auth.signOut();
@@ -142,7 +143,7 @@ AppComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__uploads_shared_upload_service__["a" /* UploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__uploads_shared_upload_service__["a" /* UploadService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__uploads_shared_pictureupload_service__["a" /* pictureUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__uploads_shared_pictureupload_service__["a" /* pictureUploadService */]) === "function" && _d || Object])
 ], AppComponent);
 
 var _a, _b, _c, _d;
@@ -163,7 +164,7 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2__ = __webpack_require__("../../../../angularfire2/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_database__ = __webpack_require__("../../../../angularfire2/database/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_angularfire2_auth__ = __webpack_require__("../../../../angularfire2/auth/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__uploads_shared_upload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__uploads_shared_pictureupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/pictureupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__uploads_shared_videoupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/videoupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__uploads_shared_audioupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/audioupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__uploads_upload_form_upload_form_component__ = __webpack_require__("../../../../../src/app/uploads/upload-form/upload-form.component.ts");
@@ -185,6 +186,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // import image upload
 // import { ImageUploadModule } from "angular2-image-upload";
 // uploads picture
+// services
 
 
 
@@ -221,7 +223,7 @@ AppModule = __decorate([
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_7__uploads_shared_upload_service__["a" /* UploadService */],
+            __WEBPACK_IMPORTED_MODULE_7__uploads_shared_pictureupload_service__["a" /* pictureUploadService */],
             __WEBPACK_IMPORTED_MODULE_8__uploads_shared_videoupload_service__["a" /* videoUploadService */],
             __WEBPACK_IMPORTED_MODULE_9__uploads_shared_audioupload_service__["a" /* audioUploadService */]
         ]
@@ -308,11 +310,11 @@ var _a, _b;
 
 /***/ }),
 
-/***/ "../../../../../src/app/uploads/shared/upload.service.ts":
+/***/ "../../../../../src/app/uploads/shared/pictureupload.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return pictureUploadService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__("../../../../angularfire2/auth/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__ = __webpack_require__("../../../../angularfire2/database/index.js");
@@ -331,20 +333,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var UploadService = (function () {
-    function UploadService(db, afAuth) {
+var pictureUploadService = (function () {
+    function pictureUploadService(db, afAuth) {
         this.db = db;
         this.afAuth = afAuth;
         this.basePath = '/uploads';
     }
-    UploadService.prototype.getUploads = function (query) {
+    pictureUploadService.prototype.getUploads = function (query) {
         if (query === void 0) { query = {}; }
         this.uploads = this.db.list(this.basePath, {
             query: query
         });
         return this.uploads;
     };
-    UploadService.prototype.deleteUpload = function (upload) {
+    pictureUploadService.prototype.deleteUpload = function (upload) {
         var _this = this;
         this.deleteFileData(upload.$key)
             .then(function () {
@@ -353,7 +355,7 @@ var UploadService = (function () {
             .catch(function (error) { return console.log(error); });
     };
     // Executes the file uploading to firebase https://firebase.google.com/docs/storage/web/upload-files
-    UploadService.prototype.pushUpload = function (upload) {
+    pictureUploadService.prototype.pushUpload = function (upload) {
         var _this = this;
         var storageRef = __WEBPACK_IMPORTED_MODULE_3_firebase__["storage"]().ref();
         var uploadTask = storageRef.child(this.basePath + "/" + upload.file.name).put(upload.file);
@@ -377,28 +379,28 @@ var UploadService = (function () {
         });
     };
     // Writes the file details to the realtime db
-    UploadService.prototype.saveFileData = function (upload) {
+    pictureUploadService.prototype.saveFileData = function (upload) {
         this.db.list(this.basePath + "/").push(upload);
     };
     // Writes the file details to the realtime db
-    UploadService.prototype.deleteFileData = function (key) {
+    pictureUploadService.prototype.deleteFileData = function (key) {
         return this.db.list(this.basePath + "/").remove(key);
     };
     // Firebase files must have unique names in their respective storage dir
     // So the name serves as a unique key
-    UploadService.prototype.deleteFileStorage = function (name) {
+    pictureUploadService.prototype.deleteFileStorage = function (name) {
         var storageRef = __WEBPACK_IMPORTED_MODULE_3_firebase__["storage"]().ref();
         storageRef.child(this.basePath + "/" + name).delete();
     };
-    return UploadService;
+    return pictureUploadService;
 }());
-UploadService = __decorate([
+pictureUploadService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _b || Object])
-], UploadService);
+], pictureUploadService);
 
 var _a, _b;
-//# sourceMappingURL=upload.service.js.map
+//# sourceMappingURL=pictureupload.service.js.map
 
 /***/ }),
 
@@ -526,7 +528,7 @@ module.exports = "<!-- <img src=\"{{upload.url}}\" alt=\"img\" height=\"80px\" w
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadDetailComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/pictureupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_upload__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -562,7 +564,7 @@ UploadDetailComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/uploads/upload-detail/upload-detail.component.html"),
         styles: [__webpack_require__("../../../../../src/app/uploads/upload-detail/upload-detail.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__["a" /* UploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__["a" /* UploadService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__["a" /* pictureUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__["a" /* pictureUploadService */]) === "function" && _b || Object])
 ], UploadDetailComponent);
 
 var _a, _b;
@@ -601,7 +603,7 @@ module.exports = "<div *ngIf=\"currentUpload\">\r\n  <progress class=\"progress 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadFormComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/pictureupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_videoupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/videoupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_audioupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/audioupload.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_upload__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.ts");
@@ -676,7 +678,7 @@ UploadFormComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/uploads/upload-form/upload-form.component.html"),
         styles: [__webpack_require__("../../../../../src/app/uploads/upload-form/upload-form.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__["a" /* UploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__["a" /* UploadService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_videoupload_service__["a" /* videoUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_videoupload_service__["a" /* videoUploadService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_audioupload_service__["a" /* audioUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_audioupload_service__["a" /* audioUploadService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__["a" /* pictureUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__["a" /* pictureUploadService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_videoupload_service__["a" /* videoUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_videoupload_service__["a" /* videoUploadService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__shared_audioupload_service__["a" /* audioUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_audioupload_service__["a" /* audioUploadService */]) === "function" && _c || Object])
 ], UploadFormComponent);
 
 var _a, _b, _c;
@@ -697,7 +699,7 @@ module.exports = "<h3>image upload</h3>\r\n\r\n<!-- <div *ngFor=\"let upload of 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UploadsListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/upload.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__ = __webpack_require__("../../../../../src/app/uploads/shared/pictureupload.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -723,7 +725,7 @@ UploadsListComponent = __decorate([
         selector: 'uploads-list',
         template: __webpack_require__("../../../../../src/app/uploads/uploads-list/uploads-list.component.html")
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__["a" /* UploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_upload_service__["a" /* UploadService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__["a" /* pictureUploadService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_pictureupload_service__["a" /* pictureUploadService */]) === "function" && _a || Object])
 ], UploadsListComponent);
 
 var _a;
