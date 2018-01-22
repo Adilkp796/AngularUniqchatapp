@@ -1,6 +1,6 @@
 # AngularChatapp
 
-let, see my demo app 'https://chatmoreapp.herokuapp.com/'
+ my demo app 'https://chatmoreapp.herokuapp.com/'
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
